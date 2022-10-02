@@ -1,5 +1,4 @@
 package aoc.Day1
-import scala.io.Source
 
 def part1(input: String): Int =
     val inList = splitInput(input)
@@ -23,13 +22,6 @@ def part2(input: String): Int =
     val sums = inList.sliding(3).map(_.sum)
     val depthPairs = sums.sliding(2).map(arr => (arr(0), arr(1)))
     depthPairs.count((prev, next) => prev < next)
-
-def readInput(): String =
-    Source
-        .fromFile(
-          "/home/donal/Documents/advent_of_code_2021/scala/src/main/input/Day1.txt"
-        )
-        .mkString
 
 def splitInput(input: String): List[Int] =
     val strList = input.split("\n").toList
