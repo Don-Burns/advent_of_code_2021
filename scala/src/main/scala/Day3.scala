@@ -18,7 +18,41 @@ def part1(input: String): Int =
     gamma * epsilon
 
 def part2(input: String): Int =
-    1
+    val bitLines: List[BitLine] = input.linesIterator.map(parseBitLine).toList
+
+    val oxygenGeneratorRatingLine: BitLine =
+        recursiveFilter(bitLines, 0, keepMostCommon = true)
+    val oxygenGeneratorRating = binarySeqToInt(oxygenGeneratorRatingLine)
+
+    val co2ScrubberRatingLine: BitLine =
+        recursiveFilter(bitLines, 0, keepMostCommon = false)
+    val co2ScrubberRating = binarySeqToInt(co2ScrubberRatingLine)
+
+    oxygenGeneratorRating * co2ScrubberRating
+
+@scala.annotation.tailrec
+def recursiveFilter(
+    bitLines: List[BitLine],
+    bitPosition: Int,
+    keepMostCommon: Boolean
+): BitLine =
+    bitLines match
+        case Nil =>
+            throw new AssertionError("this shouldn't have happened")
+        case lastRemainingLine :: Nil =>
+            lastRemainingLine
+        case _ =>
+            val (bitLinesWithOne, bitLinesWithZero) =
+                bitLines.partition(line => line(bitPosition) == 1)
+            val onesAreMostCommon =
+                bitLinesWithOne.sizeCompare(bitLinesWithZero) >= 0
+            val bitLinesToKeep =
+                if onesAreMostCommon then
+                    if keepMostCommon then bitLinesWithOne else bitLinesWithZero
+                else if keepMostCommon then bitLinesWithZero
+                else bitLinesWithOne
+            recursiveFilter(bitLinesToKeep, bitPosition + 1, keepMostCommon)
+
 def parseInput(input: String): List[BitLine] =
     input.linesIterator.map(parseBitLine(_)).toList
 
