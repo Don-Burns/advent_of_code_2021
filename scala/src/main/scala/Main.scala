@@ -2,6 +2,7 @@ import aoc.Util
 import aoc.Day1
 import aoc.Day2
 import aoc.Day3
+import aoc.Day4
 
 @main def main: Unit =
     // DAY 1
@@ -19,3 +20,8 @@ import aoc.Day3
     println(Util.formatResultOutput(d3p1, 3, 1))
     val d3p2 = Day3.part2(Util.readFile(3))
     println(Util.formatResultOutput(d3p2, 3, 2))
+    // DAY 4
+    val d4p1 = Day4.part1(Util.readFile(4))
+    println(Util.formatResultOutput(d4p1, 4, 1))
+    val d4p2 = Day4.part2(Util.readFile(4))
+    println(Util.formatResultOutput(d4p2, 4, 2))
